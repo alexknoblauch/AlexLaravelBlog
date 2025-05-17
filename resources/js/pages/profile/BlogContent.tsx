@@ -1,6 +1,13 @@
 import { useEffect } from "react";
+import { Blogs } from '../../types/Blogs';
 
-export default function BlogContent({ blogs, curBlog, setBlogs }) {
+interface interfaceBlogContent {
+  blogs: Blogs[];
+  curBlog: number;
+  setBlogs: (value: Blogs[]) => void
+}
+
+export default function BlogContent({ blogs, curBlog, setBlogs }: interfaceBlogContent) {
   useEffect(() => {
     async function getBlogs() {
       try {

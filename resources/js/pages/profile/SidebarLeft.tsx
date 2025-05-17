@@ -1,12 +1,19 @@
 import { useEffect } from "react";
 import SidebarBlog from "./SidebarBlog";
 
+interface interfaceSidebarLeft {
+  setCurBlog : (value: number) => void;
+  blogs: any[];
+  setBlogs: (value: any[]) => void;
+  postModal: boolean
+}
+
 export default function SidebarLeft({
   setCurBlog,
   blogs,
   setBlogs,
   postModal,
-}) {
+}: interfaceSidebarLeft) {
   useEffect(() => {
     async function getBlogs() {
       try {
@@ -34,7 +41,7 @@ export default function SidebarLeft({
           let data = JSON.parse(rawText);
           if (Array.isArray(data.data)) {
             const sortedData = data.data.sort(
-              (a, b) => new Date(b.date) - new Date(a.date)
+              (a:{ date: string }, b:{ date: string }) => new Date(b.date).getTime() - new Date(a.date).getTime()
             );
             setBlogs(sortedData);
           } else {

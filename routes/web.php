@@ -9,21 +9,19 @@ Route::get('/', function () {
     return Inertia::render('welcome/Login2');
 })->name('home');
 
-Route::get('/db-test', function () {
-    try {
-        \DB::connection()->getPdo();
-        return 'DB connection is working!';
-    } catch (\Exception $e) {
-        return 'DB connection error: ' . $e->getMessage();
-    }
-});
-
 
 Route::post('/login', [LoginController::class, 'login']);
 
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', function () {
+
+        $user = Auth::user();
+
+        if(!$user){
+           return redirect('/');
+        }
+
         return Inertia::render('profile/index');
     })->name('profile');
 });

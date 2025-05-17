@@ -1,6 +1,10 @@
 import { useState } from "react";
 
-export default function NewPostModal({ setPostModal }) {
+export interface interfacePostModal {
+ setPostModal : (value: boolean) => void
+}
+
+export default function NewPostModal({ setPostModal }: interfacePostModal) {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const now = new Date();
@@ -20,7 +24,7 @@ export default function NewPostModal({ setPostModal }) {
       String(now.getSeconds()).padStart(2, "0"),
     ].join(":");
 
-  async function handleNewPost(e) {
+  async function handleNewPost() {
     if (!title.trim() || !text.trim()) {
       return;
     }
@@ -56,8 +60,8 @@ export default function NewPostModal({ setPostModal }) {
 
   return (
     <>
-      <div className="modal-overlay"></div>
-      <div className="modal-content-newpost">
+      <div className="fixed top-0 left-0 w-full h-full bg-black/50 z-999"></div>
+      <div className="fixed top-1/2 left-1/2 w-[25rm] transform -translate-x-1/2 -translate-y-1/2 bg-white p-[30px] rounded-lg z-[1000]">
         <div>
           <h1>+ New Post +</h1>
           <label htmlFor="title"></label>
@@ -70,15 +74,14 @@ export default function NewPostModal({ setPostModal }) {
           ></input>
           <label htmlFor="text"></label>
           <textarea
-            className="new-post-textarea"
+            className="self-center h-24"
             value={text}
-            type="text"
             id="text"
             placeholder="your Text"
             onChange={(e) => setText(e.target.value)}
           />
           <br></br>
-          <button onClick={handleNewPost} className="sign-in-button-modal">
+          <button onClick={handleNewPost} className="bg-[#444] outline-none border-[#444] border-2 rounded-full px-12 py-[0.2rem]">
             Post
           </button>
         </div>

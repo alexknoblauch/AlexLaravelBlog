@@ -3,13 +3,20 @@ import BlogContent from "./BlogContent";
 import SidebarLeft from "./SidebarLeft";
 import SidebarRight from "./SidebarRight";
 import NewPostModal from "./NewPostModal";
+import { Blogs } from '../../types/Blogs';
 
-export default function MainMenu({ postModal, setPostModal }) {
-  const [curBlog, setCurBlog] = useState(1);
-  const [blogs, setBlogs] = useState([]);
+interface PostmodalTypes {
+  postModal: boolean,
+  setPostModal: (value: boolean) => void
+}
+
+
+export default function MainMenu({ postModal, setPostModal }: PostmodalTypes) {
+  const [curBlog, setCurBlog] = useState<number>(1);
+  const [blogs, setBlogs] = useState<Blogs[]>([]); 
 
   return (
-    <div className="mainmenu">
+    <div className="grid grid-cols-[2.5fr_5fr_2.5fr] h-[90vh]">
       {postModal && <NewPostModal setPostModal={setPostModal} />}
       <SidebarLeft
         setCurBlog={setCurBlog}
